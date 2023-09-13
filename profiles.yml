@@ -1,0 +1,14 @@
+carol:
+  outputs:
+    dev:
+      type: bigquery
+      method: service-account
+      keyfile: serviceaccount.json
+      project: carol-0483dfa91ba54cd4b97b
+      dataset: 0483dfa91ba54cd4b97b1613f1171932
+      priority: interactive
+      location: US
+      job_execution_timeout_seconds: 300
+      job_retries: 1
+      threads: 1
+  target: dev

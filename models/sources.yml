@@ -1,0 +1,33 @@
+version: 2
+
+sources:
+  - name: insights_backoffice
+    database: "{{ target.project }}"
+    schema: "{{ target.dataset }}"
+
+    quoting:
+      database: true
+      schema: true
+      identifier: true
+
+    loader: smartlink
+    loaded_at_field: _ingestionDateTime
+
+    freshness:
+      warn_after: {count: 30, period: day}
+      error_after: {count: 90, period: day}
+
+    tables:
+      #tables used in insights backoffice app
+      - name: demand_forecasting
+        identifier: stg_protheus_carol_demand_forecasting
+      - name: financial_alerts
+        identifier: stg_protheus_carol_financial_alerts
+      - name: financial_evaluate
+        identifier: stg_protheus_carol_financial_evaluate
+      - name: financial_forecast
+        identifier: stg_protheus_carol_financial_forecast
+      - name: rupture_alerts
+        identifier: stg_protheus_carol_rupture_alerts
+      - name: rupture_graph
+        identifier: stg_protheus_carol_rupture_graph

@@ -1,0 +1,18 @@
+version: 2
+
+exposures:
+
+  - name: app_insights_backoffice
+    type: application
+
+    depends_on:
+      - source('insights_backoffice', 'demand_forecasting')
+      - source('insights_backoffice', 'financial_alerts')
+      - source('insights_backoffice', 'financial_evaluate')
+      - source('insights_backoffice', 'financial_forecast')
+      - source('insights_backoffice', 'rupture_alerts')
+      - source('insights_backoffice', 'rupture_graph')
+
+    owner:
+      name: Backoffice Team
+      email: a@a.com
