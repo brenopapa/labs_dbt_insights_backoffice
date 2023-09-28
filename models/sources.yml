@@ -18,16 +18,91 @@ sources:
       error_after: {count: 90, period: day}
 
     tables:
-      #tables used in insights backoffice app
-      - name: demand_forecasting
+      #datamodels used in insights backoffice app
+      - name: demandgraph
+        identifier: demandgraph
+        tests:
+          - available_forecast_daily
+          - available_forecast_weekly
+          - available_forecast_monthly
+      - name: rupturegraph
+        identifier: rupturegraph
+        tests:
+          - available_forecast_daily
+          - available_forecast_weekly
+          - available_forecast_monthly
+      - name: forecastfinancial
+        identifier: forecastfinancial
+        tests:
+          - available_forecast_weekly
+          - available_forecast_monthly
+
+          
+      #staging tables used in insights backoffice app
+      - name: stg_protheus_carol_demand_forecasting
         identifier: stg_protheus_carol_demand_forecasting
-      - name: financial_alerts
+        columns:
+          - name: forecast_value
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+      - name: stg_protheus_carol_financial_alerts
         identifier: stg_protheus_carol_financial_alerts
-      - name: financial_evaluate
+      - name: stg_protheus_carol_financial_evaluate
         identifier: stg_protheus_carol_financial_evaluate
-      - name: financial_forecast
+      - name: stg_protheus_carol_financial_forecast
         identifier: stg_protheus_carol_financial_forecast
-      - name: rupture_alerts
+        columns:
+          - name: accuracy
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+      - name: stg_protheus_carol_rupture_alerts
         identifier: stg_protheus_carol_rupture_alerts
-      - name: rupture_graph
+        columns:
+          - name: forecast_value
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+          - name: replenishment
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+          - name: safety_stock
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+      - name: stg_protheus_carol_rupture_graph
         identifier: stg_protheus_carol_rupture_graph
+        columns:
+          - name: replenishment
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+          - name: safety_stock
+            tests:
+              - dbt_expectations.expect_column_values_to_not_be_null
+              - dbt_utils.accepted_range:
+                  min_value: 0
+                  inclusive: true
+
+      #native protheus tables
+      - name: ab6 
+        identifier: stg_protheus_carol_ab6
+        columns:
+          - name: AB6_EMISSA
+            tests:
+              - is_valid_date
+

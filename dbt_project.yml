@@ -5,3 +5,6 @@ version: '0.0.1'
 
 # This setting configures which "profile" dbt uses for this project.
 profile: 'carol'
+
+vars:
+  'dbt_date:time_zone': 'America/Sao_Paulo'
