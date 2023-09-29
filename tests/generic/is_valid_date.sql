@@ -3,7 +3,7 @@
 with validation as (
 
     select 
-        SAFE.PARSE_DATE({{ column_name }}, 'yyyyMMdd') as {{ column_name }}
+        SAFE.PARSE_DATE('%Y%m%d', {{ column_name }}) as {{ column_name }}
     from {{ model }}
     where {{ column_name }} is not null
 
