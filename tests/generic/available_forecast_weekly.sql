@@ -1,21 +1,18 @@
 {% test available_forecast_weekly(model) %}
 
 with validation as (
-
-    select 
-        upper(frequency) as frequency, 
-        max(final_reference_date) as max
-    from {{ model }}
-    group by upper(frequency)
-
+      select 
+        distinct DATE(final_reference_date) AS final_reference_date
+      from {{ model }}
+      where upper(frequency) = 'W'
 ),
 
 validation_errors as (
-
   select true
-  from validation
-  where 
-    frequency = 'W' and max < DATETIME_ADD(CURRENT_DATETIME('America/Sao_Paulo'), INTERVAL 3 WEEK)
+  from unnest(GENERATE_DATE_ARRAY(CURRENT_DATE(), DATE_ADD(CURRENT_DATE, INTERVAL 3 WEEK), INTERVAL 1 WEEK)) as prediction
+  left join validation
+    on DATE_TRUNC(prediction, WEEK) = DATE_TRUNC(final_reference_date, WEEK)
+  where validation.final_reference_date is null
 )
 
 select *

@@ -6,12 +6,17 @@ exposures:
     type: application
 
     depends_on:
-      - source('insights_backoffice', 'stg_protheus_carol_demand_forecasting')
-      - source('insights_backoffice', 'stg_protheus_carol_financial_alerts')
-      - source('insights_backoffice', 'stg_protheus_carol_financial_evaluate')
-      - source('insights_backoffice', 'stg_protheus_carol_financial_forecast')
-      - source('insights_backoffice', 'stg_protheus_carol_rupture_alerts')
-      - source('insights_backoffice', 'stg_protheus_carol_rupture_graph')
+      - ref('accounting_forecast')
+      - ref('demand_alerts')
+      # - ref('demand_graph')
+      # - ref('financial_alerts')
+      # - ref('financial_forecast')
+      # - ref('preview_delivery')
+      # - ref('price_list')
+      # - ref('rupture_alerts')
+      # - ref('rupture_graph')
+      # - ref('safety_stock')
+      # - ref('stock_balance')
 
     owner:
       name: Backoffice Team

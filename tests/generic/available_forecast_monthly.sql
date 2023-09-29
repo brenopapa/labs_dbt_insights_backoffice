@@ -1,21 +1,18 @@
 {% test available_forecast_monthly(model) %}
 
 with validation as (
-
-    select 
-        upper(frequency) as frequency, 
-        max(final_reference_date) as max
-    from {{ model }}
-    group by upper(frequency)
-
+      select 
+        distinct DATE(final_reference_date) AS final_reference_date
+      from {{ model }}
+      where upper(frequency) = 'M'
 ),
 
 validation_errors as (
-
   select true
-  from validation
-  where 
-    frequency = 'M' and max < DATETIME_ADD(CURRENT_DATETIME('America/Sao_Paulo'), INTERVAL 2 MONTH)
+  from unnest(GENERATE_DATE_ARRAY(CURRENT_DATE(), DATE_ADD(CURRENT_DATE, INTERVAL 2 MONTH), INTERVAL 1 MONTH)) as prediction
+  left join validation
+    on DATE_TRUNC(prediction, MONTH) = DATE_TRUNC(final_reference_date, MONTH)
+  where validation.final_reference_date is null
 )
 
 select *

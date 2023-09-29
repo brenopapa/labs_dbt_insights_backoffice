@@ -47,10 +47,6 @@ sources:
               - dbt_utils.accepted_range:
                   min_value: 0
                   inclusive: true
-      - name: stg_protheus_carol_financial_alerts
-        identifier: stg_protheus_carol_financial_alerts
-      - name: stg_protheus_carol_financial_evaluate
-        identifier: stg_protheus_carol_financial_evaluate
       - name: stg_protheus_carol_financial_forecast
         identifier: stg_protheus_carol_financial_forecast
         columns:
@@ -96,6 +92,16 @@ sources:
               - dbt_utils.accepted_range:
                   min_value: 0
                   inclusive: true
+      - name: stg_protheus_carol_financial_alerts
+        identifier: stg_protheus_carol_financial_alerts
+      - name: stg_protheus_carol_financial_evaluate
+        identifier: stg_protheus_carol_financial_evaluate
+      - name: matching_suggestions
+        identifier: stg_accountingreco_matching_suggestions
+      - name: view_demand
+        identifier: view_demand
+      - name: pricelist
+        identifier: pricelist
 
       #native protheus tables
       - name: sc2 
