@@ -2,22 +2,128 @@ version: 2
 
 exposures:
 
-  - name: app_insights_backoffice
-    type: application
-
+  - name: 'accounting_forecast'
+    type: analysis
     depends_on:
-      - ref('accounting_forecast')
-      - ref('demand_alerts')
-      # - ref('demand_graph')
-      # - ref('financial_alerts')
-      # - ref('financial_forecast')
-      # - ref('preview_delivery')
-      # - ref('price_list')
-      # - ref('rupture_alerts')
-      # - ref('rupture_graph')
-      # - ref('safety_stock')
-      # - ref('stock_balance')
+      - source('insights_backoffice', 'matching_suggestions')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
 
+  - name: 'demand_alerts'
+    type: analysis
+    depends_on:
+      - source('insights_backoffice', 'stg_protheus_carol_demand_forecasting')
+      - source('insights_backoffice', 'view_demand')
+      - source('protheus', 'sb1')
+      - source('protheus', 'sa2')
+      - source('protheus', 'sbm')
+      - source('protheus', 'sx5')
+      - source('protheus', 'protheus_sharing')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'demand_graph'
+    type: analysis
+    depends_on:
+      - source('insights_backoffice','stg_protheus_carol_demand_forecasting')
+      - source('insights_backoffice', 'view_demand')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'financial_alerts'
+    type: analysis
+    depends_on:
+      - source('insights_backoffice', 'stg_protheus_carol_demand_forecasting')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'financial_forecast'
+    type: analysis
+    depends_on:
+      - source('protheus','fk5')
+      - source('insights_backoffice', 'stg_protheus_carol_financial_forecast')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'preview_delivery'
+    type: analysis
+    depends_on:
+      - source('protheus','sc7')
+      - source('protheus','sb1')
+      - source('protheus','sc2')
+      - source('protheus','sd1')
+      - source('protheus','sf1')
+      - source('protheus','sx5')
+      - source('protheus','cnb')
+      - source('protheus','cn9')
+      - source('protheus','cns')
+      - source('protheus','cnf')
+      - source('protheus', 'protheus_sharing')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'price_list'
+    type: analysis
+    depends_on:
+      - source('protheus','sd1')
+      - source('protheus','sc3')
+      - source('protheus','sc7')
+      - source('protheus','sc8')
+      - source('protheus','aib')
+      - source('protheus','cna')
+      - source('protheus','cnb')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'rupture_alerts'
+    type: analysis
+    depends_on:
+      - source('insights_backoffice', 'stg_protheus_carol_rupture_alerts')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'rupture_graph'
+    type: analysis
+    depends_on:
+      - source('insights_backoffice', 'stg_protheus_carol_rupture_graph')
+      - source('insights_backoffice', 'stg_protheus_carol_demand_forecasting')
+      - source('insights_backoffice', 'view_demand')
+      - source('protheus','sb9')
+      - source('protheus', 'protheus_sharing')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'safety_stock'
+    type: analysis
+    depends_on:
+      - source('insights_backoffice', 'view_demand')
+      - source('protheus','sc7')
+      - source('protheus','sd1')
+      - source('protheus','sf1')
+      - source('protheus','sb1')
+      - source('protheus','sx5')
+      - source('protheus','sc2')
+      - source('protheus','sd3')
+      - source('protheus','sf1')
+      - source('protheus','protheus_sharing')
+    owner:
+      name: Backoffice Team
+      email: a@a.com
+
+  - name: 'stock_balance'
+    type: analysis
+    depends_on:
+      - source('protheus','sb2')
+      - source('protheus','sx5')
     owner:
       name: Backoffice Team
       email: a@a.com
